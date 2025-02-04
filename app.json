@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "task",
-    "slug": "task",
+    "slug": "store",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -10,7 +10,7 @@
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#FFD700"
     },
     "ios": {
       "supportsTablet": true
@@ -19,10 +19,20 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.salaheddinet.task"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
-  }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "70620f82-2160-4c5f-9c2c-f3197cd2ce2f"
+      }
+    },
+    "owner": "alcaranoisco"
+  },
+  "assetBundlePatterns": [
+    "**/*"
+  ]
 }

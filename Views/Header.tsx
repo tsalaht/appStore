@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet } from "react-native";
-import { Stack, Pressable, Menu, Text, Center } from "native-base";
-import { Setting2 } from "iconsax-react-native";
+import { Stack, Pressable, Text, Center, Switch, Popover, VStack, HStack, Box } from "native-base";
+import { Setting2,Moon,Sun1 } from "iconsax-react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleTheme } from "../store/themeSlice";
 import { setLanguage } from "../store/languageSlice";
@@ -10,11 +9,11 @@ import i18n from "../Locale/i18n";
 
 const Header = () => {
   const [message, setMessage] = useState<string | null>(null);
+  const [showDropdown, setShowDropdown] = useState<boolean>(false);
+  const [showSetting, setShowSetting] = useState<boolean>(false);
   const dispatch = useDispatch();
   const isDarkMode = useSelector((state: RootState) => state.theme.isDarkMode);
-  const currentLanguage = useSelector(
-    (state: RootState) => state.language.currentLanguage
-  );
+  const currentLanguage = useSelector((state: RootState) => state.language.currentLanguage);
 
   const showMessage = (text: string) => {
     setMessage(text);
@@ -25,70 +24,82 @@ const Header = () => {
     i18n.changeLanguage(currentLanguage);
   }, [currentLanguage]);
 
-  useEffect(() => {
-    console.log(`Theme changed to: ${isDarkMode ? "Dark" : "Light"}`);
-  }, [isDarkMode]);
-
   const handleThemeToggle = () => {
     dispatch(toggleTheme());
     const themeMessage = isDarkMode ? i18n.t("lightMode") : i18n.t("darkMode");
     showMessage(themeMessage);
   };
-
-  const handleLanguageSwitch = (lang: string) => {
+  const handleThemePress = () => {
+    dispatch(toggleTheme());
+    const themeMessage = isDarkMode ? i18n.t("lightMode") : i18n.t("darkMode");
+    showMessage(themeMessage);
+  };
+  const handleLanguageChange = (lang: string) => {
     dispatch(setLanguage(lang));
+    setShowDropdown(false);
     showMessage(i18n.t("language") + `: ${lang}`);
   };
 
   return (
-    <Stack
-      width="100%"
-      paddingX={8}
-      paddingY={5}
-      backgroundColor={isDarkMode ? "black" : "#F0F0F0"}
-    >
-      <Menu
-        w="190px"
-        bgColor={isDarkMode ? "#333333" : "#FFFFFF"}
-        placement="bottom left"
-        marginTop={8}
-        trigger={(triggerProps) => (
-          <Pressable {...triggerProps}>
-            <Setting2 size="26" color="#1BA4A9" />
-          </Pressable>
-        )}
-      >
-        <Menu.Group title={i18n.t("setting")}>
-          <Menu.Item onPress={handleThemeToggle}>
-            {i18n.t("switchTheme")}
-          </Menu.Item>
-        </Menu.Group>
-        <Menu.Group title={i18n.t("language")}>
-          <Menu.Item onPress={() => handleLanguageSwitch("ar")}>
-            العربية
-          </Menu.Item>
-          <Menu.Item onPress={() => handleLanguageSwitch("en")}>
-            English
-          </Menu.Item>
-        </Menu.Group>
-      </Menu>
+    <Stack width="100%" paddingX={8} paddingY={8} backgroundColor={ isDarkMode? 'black':" #ECECEC"} position="relative">
+      <HStack w={'full'} alignItems={'center'} justifyContent={'space-between'}>
+      <Pressable onPress={() => setShowSetting(!showSetting)}>
+        <Setting2 size="26" color="#FFD700" />
+      </Pressable>
+      <Pressable onPress={handleThemePress}> 
+           {isDarkMode ? <Sun1 size="26" color="#FFD700" /> : <Moon size="26" color="#FFD700" />}
+        </Pressable>
+      </HStack>
 
-      {message && (
-        <Center
-          position="absolute"
-          top="50%"
-          left="50%"
-          style={{ transform: [{ translateX: -75 }, { translateY: -15 }] }}
-          bg="black"
-          px={5}
-          py={2}
-          rounded="md"
+
+      {showSetting && (
+        <Box 
+          position="absolute" 
+          top={20}
+          left={5}
+          zIndex={10}
+          width="100%" 
         >
-          <Text color="white" fontSize="12" textAlign="center">
-            {message}
-          </Text>
-        </Center>
+          <VStack
+            space={4}
+            backgroundColor="#F9D77E"
+            p={5}
+            rounded="8px"
+            width="60%"
+          >
+      
+
+            <HStack alignItems="center" justifyContent="space-between">
+              <Text color={isDarkMode ? "white" : "black"}>{i18n.t("language")}</Text>
+              <Popover
+                isOpen={showDropdown}
+                onClose={() => setShowDropdown(false)}
+                trigger={(triggerProps) => (
+                  <Pressable {...triggerProps} onPress={() => setShowDropdown(true)} bg={isDarkMode ? "#D4AF37" : "white"} padding={2} rounded="md">
+                    <Text color={isDarkMode ? "white" : "black"}>
+                      {currentLanguage === "ar" ? "العربية" : "English"}
+                    </Text>
+                  </Pressable>
+                )}
+              >
+                <Popover.Content width="150px">
+                  <Popover.Body>
+                    <Box>
+                      <Pressable onPress={() => handleLanguageChange("ar")} mb={4}>
+                        <Text>العربية</Text>
+                      </Pressable>
+                      <Pressable onPress={() => handleLanguageChange("en")}>
+                        <Text>English</Text>
+                      </Pressable>
+                    </Box>
+                  </Popover.Body>
+                </Popover.Content>
+              </Popover>
+            </HStack>
+          </VStack>
+        </Box>
       )}
+
     </Stack>
   );
 };

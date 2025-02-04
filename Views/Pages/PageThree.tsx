@@ -1,30 +1,142 @@
-import { View, Text } from "react-native";
-import React from "react";
-import styles from "../Styles";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store/store";
-import { useTranslation } from "react-i18next";
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../../store/store';
+import { incrementQuantity, decrementQuantity, clearCart, removeFromCart } from '../../store/cartSlice';
+import { Box, Text, Button, VStack, HStack, ScrollView, Icon, Pressable } from 'native-base';
+import { MaterialIcons } from '@expo/vector-icons'; // For icons
+import styles from '../Styles';
+
 const PageThree = () => {
-  const { t } = useTranslation();
+  const cartItems = useSelector((state: RootState) => state.cart.items);
+  const totalAmount = useSelector((state: RootState) => state.cart.totalAmount);
+  const dispatch = useDispatch();
   const isDarkMode = useSelector((state: RootState) => state.theme.isDarkMode);
+
   return (
-    <View style={styles.viewContainer}>
-      <View
-        style={[
-          styles.mainContainer,
-          isDarkMode ? styles.darkBckground : styles.lightBckground,
-        ]}
+    <VStack
+      style={[
+        styles.mainContainer,
+        isDarkMode ? styles.darkBckground : styles.lightBckground,
+      ]}
+      flex={1}
+    >
+      <ScrollView flex={1}>
+        {cartItems.map(item => (
+          <Pressable
+            key={item.id}
+            onPress={() => {}}
+          >
+            <Box
+              bg={isDarkMode ? 'gray.800' : 'white'}
+              shadow={4}
+              rounded="xl"
+              margin={4}
+              padding={4}
+              borderWidth={1}
+              borderColor={isDarkMode ? 'gray.700' : 'gray.200'}
+            >
+              <VStack justifyContent="space-between" alignItems="center">
+                
+                <VStack space={1} flex={1}>
+                  <Text bold fontSize={16} color={isDarkMode ? 'white' : 'gray.900'}>
+                    {item.name}
+                  </Text>
+                  <Text color={isDarkMode ? 'gray.400' : 'gray.600'}>
+                    ${item.price.toFixed(2)} each
+                  </Text>
+                </VStack>
+<VStack alignItems="center" space={2}>
+<HStack alignItems="center" space={2}>
+                  {/* Decrease Quantity Button */}
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onPress={() => dispatch(decrementQuantity(item.id))}
+                    _hover={{ bg: isDarkMode ? 'gray.700' : 'gray.100' }}
+                    borderRadius="full"
+                    width={8}
+                    height={8}
+                    padding={0}
+                  >
+                    <Icon as={MaterialIcons} name="remove" size="sm" color={isDarkMode ? 'white' : 'gray.900'} />
+                  </Button>
+
+                  {/* Quantity Display */}
+                  <Box
+                    bg={isDarkMode ? 'gray.700' : 'gray.100'}
+                    borderRadius="md"
+                    paddingX={3}
+                    paddingY={1}
+                  >
+                    <Text bold fontSize="md" color={isDarkMode ? 'white' : 'gray.900'}>
+                      {item.quantity}
+                    </Text>
+                  </Box>
+
+                  {/* Increase Quantity Button */}
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onPress={() => dispatch(incrementQuantity(item.id))}
+                    _hover={{ bg: isDarkMode ? 'gray.700' : 'gray.100' }}
+                    borderRadius="full"
+                    width={8}
+                    height={8}
+                    padding={0}
+                  >
+                    <Icon as={MaterialIcons} name="add" size="sm" color={isDarkMode ? 'white' : 'gray.900'} />
+                  </Button>
+                </HStack>
+
+                {/* Remove Product Button */}
+                <Button
+                  variant="subtle"
+                  bgColor="#F9D77E"
+                  onPress={() => dispatch(removeFromCart(item.id))}
+                  leftIcon={<Icon as={MaterialIcons} name="delete" size="sm" />}
+                  _hover={{ bg: 'red.600' }}
+                  
+                >
+                  Remove
+                </Button>
+</VStack>
+              
+              </VStack>
+            </Box>
+          </Pressable>
+        ))}
+      </ScrollView>
+
+      {/* Sticky Footer */}
+      <Box
+        bg={isDarkMode ? 'gray.900' : 'white'}
+        shadow={6}
+        padding={4}
+        borderTopWidth={1}
+        borderTopColor={isDarkMode ? 'gray.700' : 'gray.200'}
       >
-        <Text
-          style={[
-            isDarkMode ? styles.darkText : styles.lightText,
-            { fontSize: 20 },
-          ]}
+        <HStack justifyContent="space-between" alignItems="center">
+          <Text bold fontSize="xl" color={isDarkMode ? 'white' : 'gray.900'}>
+            Total:
+          </Text>
+          <Text bold fontSize="xl" color={isDarkMode ? '#468500' : '#468500'}>
+            ${totalAmount.toFixed(2)}
+          </Text>
+        </HStack>
+
+        <Button
+          variant="solid"
+          bg="#FFD700"
+          onPress={() => dispatch(clearCart())}
+          leftIcon={<Icon as={MaterialIcons} name="delete-sweep" size="sm" color="white" />}
+          marginTop={4}
         >
-          {t("pageThree")}
-        </Text>
-      </View>
-    </View>
+          <Text color="white" bold>
+            Clear Cart
+          </Text>
+        </Button>
+      </Box>
+    </VStack>
   );
 };
 

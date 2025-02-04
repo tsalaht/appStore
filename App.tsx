@@ -1,16 +1,19 @@
 import { StatusBar } from "expo-status-bar";
 import { useCallback, useEffect } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View,SafeAreaView } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { NativeBaseProvider, extendTheme } from "native-base";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import * as SplashScreen from "expo-splash-screen";
 import { Provider } from "react-redux";
 import { I18nextProvider } from "react-i18next";
 import store from "./store/store";
 import i18n from "./Locale/i18n";
 import Pages from "./Views";
+import AppScreens from "./Views/AllPages";
 export default function App() {
+  SplashScreen.preventAutoHideAsync();
   let [fontsLoaded] = useFonts({
     Alexandria_100Thin: require("./assets/fonts/Alexandria/static/Alexandria-Thin.ttf"),
     Alexandria_200ExtraLight: require("./assets/fonts/Alexandria/static/Alexandria-ExtraLight.ttf"),
@@ -65,7 +68,9 @@ export default function App() {
   const theme = extendTheme({ ...newFontTheme });
   useEffect(() => {
     if (fontsLoaded) {
-      SplashScreen.hideAsync().catch(console.warn);
+      SplashScreen.hideAsync().catch((error) => {
+        console.warn("Error hiding splash screen:", error);
+      });
     }
   }, [fontsLoaded]);
 
@@ -74,8 +79,8 @@ export default function App() {
     <Provider store={store}>
       <I18nextProvider i18n={i18n}>
         <NativeBaseProvider theme={theme}>
-          <NavigationContainer>
-            <Pages />
+          <NavigationContainer >
+               <AppScreens /> 
           </NavigationContainer>
         </NativeBaseProvider>
       </I18nextProvider>
@@ -89,5 +94,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+    width:'100%'
   },
 });

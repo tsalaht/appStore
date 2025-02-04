@@ -3,12 +3,13 @@ const styles = StyleSheet.create({
     viewContainer: {
       flexGrow: 1,
       position: "relative",
+        width:'100%'
     },
   
   mainContainer:{
 flex:1,
-alignItems:'center',
-justifyContent:'center'
+paddingHorizontal:14,
+paddingVertical:8
   },
 lightText:{
     color:'black',

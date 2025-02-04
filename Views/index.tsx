@@ -1,19 +1,22 @@
-import { View } from "react-native";
+import { View } from "native-base";
 import React, { useState } from "react";
 import { Text } from "native-base";
 import {
   BottomTabNavigationOptions,
   createBottomTabNavigator,
 } from "@react-navigation/bottom-tabs";
-import { Notepad2 } from "iconsax-react-native";
+import { User,Home ,Discover,ShoppingCart} from "iconsax-react-native";
 import PageOne from "./Pages/PageOne";
 import PageTwo from "./Pages/PageTwo";
 import PageThree from "./Pages/PageThree";
+import PageFour from "./Pages/PageFour";
 import Header from "./Header";
 import styles from "./Styles";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { useTranslation } from "react-i18next";
+import Parts from "./Parts/Parts";
+import Header2 from "./Header2";
 interface Screen {
   name: string;
   component: React.FC<any>;
@@ -34,7 +37,8 @@ const Pages: React.FC = () => {
       name: "page one",
       component: PageOne,
       options: {
-        headerShown: false,
+        headerShown: true,
+        header: (props) => <Header2/>,
         tabBarStyle: {
           height: 50,
           backgroundColor: isDarkMode ? "black" : "white",
@@ -42,31 +46,32 @@ const Pages: React.FC = () => {
         },
         tabBarLabel: (props) => (
           <Text
-            color={props.focused ? "#1BA4A9" : "#D1D1D1"}
+            color={props.focused ? "#FFD700" : "#D1D1D1"}
             fontWeight={500}
             fontSize={"10px"}
           >
-          {t('pageOne')}
+          {t('Home')}
           </Text>
         ),
         tabBarIconStyle: {
           marginBottom: 0,
         },
         tabBarIcon: (props) => (
-          <Notepad2
+          <Home
             width="22"
             height="22"
-            color={props.focused ? "#1BA4A9" : "#D1D1D1"}
-            variant="Bold"
+            color={props.focused ? "#FFD700" : "#D1D1D1"}
+            variant={isDarkMode?"Broken":"Bold"}
           />
         ),
       },
     },
     {
       name: "page two",
-      component: PageTwo,
+      component: Parts,
       options: {
-        headerShown: false,
+        headerShown: true,
+        header: (props) => <Header2/>,
         tabBarStyle: {
           height: 50,
           backgroundColor: isDarkMode ? "black" : "white",
@@ -74,22 +79,22 @@ const Pages: React.FC = () => {
         },
         tabBarLabel: (props) => (
           <Text
-            color={props.focused ? "#1BA4A9" : "#D1D1D1"}
+            color={props.focused ? "#FFD700" : "#D1D1D1"}
             fontWeight={500}
             fontSize={"10px"}
           >
-            {t('pageTwo')}
+            {t('Explore')}
           </Text>
         ),
         tabBarIconStyle: {
           marginBottom: 0,
         },
         tabBarIcon: (props) => (
-          <Notepad2
+          <Discover
             width="22"
             height="22"
-            color={props.focused ? "#1BA4A9" : "#D1D1D1"}
-            variant="Bold"
+            color={props.focused ? "#FFD700" : "#D1D1D1"}
+            variant={isDarkMode?"Broken":"Bold"}
           />
         ),
       },
@@ -98,7 +103,8 @@ const Pages: React.FC = () => {
       name: "page three",
       component: PageThree,
       options: {
-        headerShown: false,
+        headerShown: true,
+        header: (props) => <Header2/>,
         tabBarStyle: {
           height: 50,
           backgroundColor: isDarkMode ? "black" : "white",
@@ -106,36 +112,62 @@ const Pages: React.FC = () => {
         },
         tabBarLabel: (props) => (
           <Text
-            color={props.focused ? "#1BA4A9" : "#D1D1D1"}
+            color={props.focused ? "#FFD700" : "#D1D1D1"}
             fontWeight={500}
             fontSize={"10px"}
           >
-           {t('pageThree')}
+           {t('Carte')}
           </Text>
         ),
         tabBarIconStyle: {
           marginBottom: 0,
         },
         tabBarIcon: (props) => (
-          <Notepad2
+          <ShoppingCart
             width="22"
             height="22"
-            color={props.focused ? "#1BA4A9" : "#D1D1D1"}
-            variant="Bold"
+            color={props.focused ? "#FFD700" : "#D1D1D1"}
+            variant={isDarkMode?"Broken":"Bold"}
+          />
+        ),
+      },
+    },
+    {
+      name: "page Four",
+      component: PageFour,
+      options: {
+        headerShown: true,
+        header: (props) => <Header2/>,
+        tabBarStyle: {
+          height: 50,
+          backgroundColor: isDarkMode ? "black" : "white",
+          borderTopWidth: 0,
+        },
+        tabBarLabel: (props) => (
+          <Text
+            color={props.focused ? "#FFD700" : "#D1D1D1"}
+            fontWeight={500}
+            fontSize={"10px"}
+          >
+           {t('myProfil')}
+          </Text>
+        ),
+        tabBarIconStyle: {
+          marginBottom: 0,
+        },
+        tabBarIcon: (props) => (
+          <User
+            width="22"
+            height="22"
+            color={props.focused ? "#FFD700" : "#D1D1D1"}
+            variant={isDarkMode?"Broken":"Bold"}
           />
         ),
       },
     },
   ];
   return (
-    <View
-      style={[
-        styles.viewContainer,
-        { paddingTop: 45 },
-        isDarkMode ? styles.darkBckground : styles.lightBckground,
-      ]}
-    >
-      <Header />
+
       <Tab.Navigator
         initialRouteName="page one"
         screenOptions={({ route }) => ({
@@ -161,7 +193,6 @@ const Pages: React.FC = () => {
           />
         ))}
       </Tab.Navigator>
-    </View>
   );
 };
 
