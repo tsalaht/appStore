@@ -27,10 +27,10 @@
     },
     "extra": {
       "eas": {
-        "projectId": "70620f82-2160-4c5f-9c2c-f3197cd2ce2f"
+        "projectId": "039805e4-ec3e-4b9b-8ae3-1565fd099f04"
       }
     },
-    "owner": "alcaranoisco"
+    "owner": "salaheddinet"
   },
   "assetBundlePatterns": [
     "**/*"
