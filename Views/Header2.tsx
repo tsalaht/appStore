@@ -45,12 +45,8 @@ const Header2 = () => {
   };
 
   return (
-    <Stack width="100%" paddingX={8} paddingY={8} backgroundColor={isDarkMode ? "black" : "#FFF6DF"} position="relative" > 
-    <VStack position={'absolute'} overflow={'hidden'} h={100} bottom={0} right={-20} width={'full'}>
-    <Stack position={'absolute'} height={250} width={250} borderColor={'#FFF0C9'} bgColor={'transparent'} borderWidth={8} right={-100} top={-100} rounded={'full'}></Stack>
-<Stack position={'absolute'} height={200} width={200} borderColor={'#FFF0C9'} bgColor={'transparent'} borderWidth={8} right={-80} top={-80} rounded={'full'}></Stack>
-<Stack position={'absolute'} height={150} width={150} borderColor={'#FFF0C9'} bgColor={'transparent'} borderWidth={8} right={-60} top={-50} rounded={'full'}></Stack>
-    </VStack>
+    <Stack width="100%" paddingX={8} paddingY={8} backgroundColor={isDarkMode ? "#0C0C0C" : "#FFF6DF"} position="relative" > 
+
 
       <HStack w={'full'} alignItems={'center'} justifyContent={'space-between'}>
         {/* Settings Icon */}

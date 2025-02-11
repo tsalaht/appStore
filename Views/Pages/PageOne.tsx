@@ -8,6 +8,7 @@ import Men from "../Components/Men";
 import { ScrollView } from "native-base";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
+import Adds from "../Components/Adds";
 
 const PageOne = () => {
   const isDarkMode = useSelector((state: RootState) => state.theme.isDarkMode);
@@ -16,6 +17,7 @@ const PageOne = () => {
       styles.viewContainer,
       isDarkMode ? styles.darkBckground : styles.lightBckground,
     ]} flex={1} height={'100%'}>
+      <Adds/>
       <NewProducts/>
       <Men/>
       <Women/>

@@ -42,7 +42,7 @@ const Confirmation = ({ navigation }: any) => {
         </Box>
       ),
     });
-    dispatch(setPassHome(true));
+    navigation.navigate("recoveryPassword")
   };
 
   const inputRefs = Array(5)

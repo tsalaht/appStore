@@ -5,6 +5,7 @@ import cartReducer from './cartSlice';
 import userReducer from "./userSlice";
 import passHomeReducer from './PassHomeSlice';
 import searchReducer from "./searchSlice";
+import productsReducer from './features/productsSlice';
 const store = configureStore({
   reducer: {
     theme: themeReducer,
@@ -13,6 +14,7 @@ const store = configureStore({
     user: userReducer,
     passHome: passHomeReducer,
     search: searchReducer,
+    products: productsReducer,
   },
 });
 

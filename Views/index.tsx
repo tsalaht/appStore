@@ -1,4 +1,4 @@
-import { View } from "native-base";
+import { Stack, View } from "native-base";
 import React, { useState } from "react";
 import { Text } from "native-base";
 import {
@@ -17,6 +17,7 @@ import { RootState } from "../store/store";
 import { useTranslation } from "react-i18next";
 import Parts from "./Parts/Parts";
 import Header2 from "./Header2";
+import UserDetail from "./User/UserDetail";
 interface Screen {
   name: string;
   component: React.FC<any>;
@@ -25,6 +26,7 @@ interface Screen {
 const Tab = createBottomTabNavigator();
 
 const Pages: React.FC = () => {
+  const cartItems = useSelector((state: RootState) => state.cart.items);
   const isDarkMode = useSelector((state: RootState) => state.theme.isDarkMode);
   const { t } = useTranslation(); 
   const [focusedTab, setFocusedTab] = useState<string>("");
@@ -90,6 +92,7 @@ const Pages: React.FC = () => {
           marginBottom: 0,
         },
         tabBarIcon: (props) => (
+         
           <Discover
             width="22"
             height="22"
@@ -123,18 +126,34 @@ const Pages: React.FC = () => {
           marginBottom: 0,
         },
         tabBarIcon: (props) => (
-          <ShoppingCart
+          <Stack position={'relative'}>
+           {cartItems.length > 0 && (
+              <Stack
+                w={3}
+                h={3}
+                position="absolute"
+                rounded="full"
+                backgroundColor="#FFDF00"
+                right={-4}
+                top={-2}
+                zIndex={87}
+              />
+            )}
+             <ShoppingCart
             width="22"
             height="22"
             color={props.focused ? "#FFD700" : "#D1D1D1"}
             variant={isDarkMode?"Broken":"Bold"}
-          />
+          />   
+        
+          </Stack>
+         
         ),
       },
     },
     {
       name: "page Four",
-      component: PageFour,
+      component: UserDetail,
       options: {
         headerShown: true,
         header: (props) => <Header2/>,

@@ -1,34 +1,29 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface UserState {
+interface UserProfile {
   name: string;
-  email: string;
-  avatar: string;
-  orders: { id: number; status: string }[];
-  notificationsEnabled: boolean;
-  addresses: string[];
+  address: string;
+  profileImage: string | null;
 }
 
-const initialState: UserState = {
-  name: "Guest User",
-  email: "guest@example.com",
-  avatar: "https://via.placeholder.com/150",
-  orders: [],
-  notificationsEnabled: true,
-  addresses: [],
+const initialState: UserProfile = {
+  name: 'Guest User',
+  address: '',
+  profileImage: null,
 };
 
 const userSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState,
   reducers: {
-    updateProfile: (state, action: PayloadAction<Partial<UserState>>) => {
-      return { ...state, ...action.payload };
+    updateProfile: (state, action: PayloadAction<UserProfile>) => {
+      state.name = action.payload.name;
+      state.address = action.payload.address;
+      state.profileImage = action.payload.profileImage;
     },
-    clearUser: () => initialState,
   },
 });
 
-export const { updateProfile, clearUser } = userSlice.actions;
+export const { updateProfile } = userSlice.actions;
 
 export default userSlice.reducer;

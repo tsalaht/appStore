@@ -20,7 +20,7 @@ import { RootState } from "../../store/store";
 import { useTranslation } from "react-i18next";
 import { setPassHome } from "../../store/PassHomeSlice";
 
-export default function Login() {
+export default function RecoveryPassword() {
   const dispatch = useDispatch();
   const navigation: any = useNavigation();
   const toast = useToast();
@@ -35,16 +35,13 @@ export default function Login() {
   const isArabic = i18n.language === "ar";
 
   const login = async () => {
-    if (!phoneNumber.trim()) {
-      showToast(t("phone_required"), "red.500");
-      return;
-    }
+
     if (!password.trim()) {
       showToast(t("password_required"), "red.500");
       return;
     }
     showToast(t("registration_successful"), "#FFD700");
-    dispatch(setPassHome(true));
+    navigation.navigate("Login")
   };
 
   const showToast = (message: string, bgColor: string) => {
@@ -72,43 +69,14 @@ export default function Login() {
       <StatusBar style={Platform.OS === "ios" ? "dark" : "auto"} />
       <Stack w="full" justifyContent="center" alignItems="center">
         <Text fontWeight={700} fontSize="16px" color={textColor}>
-          {t("login")}
+      {t('recovery_password')}
         </Text>
       </Stack>
 
       <VStack space="14px" flex={1} mt="50px" mb={10}>
-        {/* Phone Number Input */}
-        <Text textAlign={isArabic ? "right" : "left"} color={textColor}>
-          {t("phone_number")}
-        </Text>
-        <Box
-          flexDirection={isArabic ? "row-reverse" : "row"}
-          alignItems="center"
-          px={4}
-          borderWidth={1}
-          borderColor={inputBorderColor}
-          rounded="8px"
-        >
-          <Input
-            placeholder={t("phone_placeholder")}
-            textAlign={isArabic ? "right" : "left"}
-            flex={1}
-            value={phoneNumber}
-            onChangeText={(text) => /^\d*$/.test(text) && setPhoneNumber(text)}
-            keyboardType="numeric"
-            maxLength={15}
-            variant="unstyled"
-            _focus={{ backgroundColor: "transparent", borderColor: "transparent" }}
-            bg="transparent"
-            borderWidth={0}
-            color={textColor}
-          />
-          <Mobile size="26" color="#FFD700" />
-        </Box>
-
         {/* Password Input */}
         <Text textAlign={isArabic ? "right" : "left"} color={textColor}>
-          {t("password")}
+{t('new_password')}
         </Text>
         <Box
           flexDirection={isArabic ? "row-reverse" : "row"}
@@ -140,20 +108,7 @@ export default function Login() {
           </Pressable>
         </Box>
 
-        {/* Forgot Password */}
-        <Pressable
-          onPress={() => navigation.navigate("Confirmation")}
-          mt="5px"
-        >
-          <Text
-            fontSize="14px"
-            textAlign={isArabic ? "right" : "left"}
-            color="#FFD700"
-            underline
-          >
-            {t("forgot_password")}
-          </Text>
-        </Pressable>
+    
       </VStack>
 
       <Button
@@ -167,7 +122,7 @@ export default function Login() {
         onPress={login}
       >
         <Text fontSize="16px" fontFamily="Alexandria_700Bold" color="white">
-          {t("login")}
+{t('back_to_login')}
         </Text>
       </Button>
     </VStack>

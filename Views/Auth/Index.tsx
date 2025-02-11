@@ -4,6 +4,7 @@ import Header from '../Header';
 import Register from './Register';
 import Login from './Login';
 import Confirmation from './Confirmation';
+import RecoveryPassword from './RecoveryPassword';
 import { View } from 'react-native';
 
 const Stack = createNativeStackNavigator<any>();
@@ -28,6 +29,13 @@ const AuthPages: React.FC = () => {
       <Stack.Screen
         name="Confirmation"
         component={Confirmation}
+        options={{
+          header: () => <Header />,
+        }}
+      />
+      <Stack.Screen
+        name="recoveryPassword"
+        component={RecoveryPassword}
         options={{
           header: () => <Header />,
         }}

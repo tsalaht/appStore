@@ -13,7 +13,7 @@ const CARD_SPACING = 12;
 const AUTO_SCROLL_INTERVAL = 3000;
 
 export default function NewProducts() {
-  const { t } = useTranslation();
+  const { t,i18n } = useTranslation();
   const isDarkMode = useSelector((state: RootState) => state.theme.isDarkMode);
   const scrollX = useRef(new Animated.Value(0)).current;
   const flatListRef = useRef<FlatList>(null);
@@ -59,14 +59,18 @@ export default function NewProducts() {
       ]}
     >
       <VStack w={"full"} alignItems={"center"} justifyContent={"center"} mb={12}>
-        <Text
-          style={[
-            isDarkMode ? styles.darkText : styles.lightText,
-            { fontSize: 20, marginBottom: 16 },
-          ]}
-        >
-          <Text style={{ color: "#FFD700" }}>New</Text> Products
-        </Text>
+      <Text
+      style={[
+        isDarkMode ? styles.darkText : styles.lightText,
+        {
+          fontSize: 20,
+          marginBottom: 16,
+          textAlign: i18n.language === "ar" ? "right" : "left",
+        },
+      ]}
+    >
+      <Text style={{ color: "#FFD700" }}>{t("New")}</Text> {t("Products")}
+    </Text>
         <Stack width={"20%"} h={1.5} bg={"#FFD700"} rounded={4}></Stack>
       </VStack>
 
@@ -95,6 +99,7 @@ export default function NewProducts() {
               }
               alt={`${t(item.nameKey)}`}
               style={{ width: "100%", borderRadius: 8 }}
+           
             />
             <HStack
               w={"90%"}
