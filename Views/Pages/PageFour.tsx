@@ -98,15 +98,7 @@ const PageFour = () => {
         </Text>
         <HStack justifyContent="space-between" alignItems="center">
           <Text style={{ color: textColor, textAlign: textAlignStyle }}>
-            {t("Current Orders")}
-          </Text>
-          <Button variant="ghost" onPress={() => navigation.navigate("Orders")}>
-            <Text style={{ color: "#FFD700" }}>{t("Track")}</Text>
-          </Button>
-        </HStack>
-        <HStack justifyContent="space-between" alignItems="center">
-          <Text style={{ color: textColor, textAlign: textAlignStyle }}>
-            {t("Past Orders")}
+            {t("my_orders")}
           </Text>
           <Button variant="ghost" onPress={() => navigation.navigate("Orders")}>
             <Text style={{ color: "#FFD700" }}>{t("View")}</Text>

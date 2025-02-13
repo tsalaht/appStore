@@ -13,7 +13,7 @@ import {
   Pressable,
 } from "native-base";
 import { StatusBar } from "expo-status-bar";
-import { Mobile, Eye, EyeSlash } from "iconsax-react-native";
+import { Mobile, Eye, EyeSlash,ArrowLeft } from "iconsax-react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store/store";
@@ -70,6 +70,11 @@ export default function Login() {
       flex={1}
     >
       <StatusBar style={Platform.OS === "ios" ? "dark" : "auto"} />
+        <Stack w={"full"} mb={4} position={"fixed"}>
+              <Pressable onPress={() => navigation.goBack()}>
+                <ArrowLeft size="32" color="#FFD700" />
+              </Pressable>
+            </Stack>
       <Stack w="full" justifyContent="center" alignItems="center">
         <Text fontWeight={700} fontSize="16px" color={textColor}>
           {t("login")}

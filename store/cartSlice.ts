@@ -8,16 +8,19 @@ interface CartItem {
   quantity: number;
   size?: string;
   color?: string;
+  status?: 'in_cart' | 'on_the_way' | 'removed';
 }
 
 interface CartState {
   items: CartItem[];
   totalAmount: number;
+  orderStatus: 'idle' | 'loading' | 'success' | 'error';
 }
 
 const initialState: CartState = {
   items: [],
   totalAmount: 0,
+  orderStatus: 'idle',
 };
 
 const cartSlice = createSlice({
@@ -26,8 +29,6 @@ const cartSlice = createSlice({
   reducers: {
     addToCart: (state, action: PayloadAction<CartItem>) => {
       const { id, size, color, price } = action.payload;
-
-      // Find if the same product with the same size and color exists
       const existingItem = state.items.find(
         item => item.id === id && item.size === size && item.color === color
       );
@@ -35,13 +36,12 @@ const cartSlice = createSlice({
       if (existingItem) {
         existingItem.quantity += 1;
       } else {
-        state.items.push({ ...action.payload, quantity: 1 });
+        state.items.push({ ...action.payload, quantity: 1, status: 'in_cart' });
       }
       state.totalAmount += price;
     },
     incrementQuantity: (state, action: PayloadAction<{ id: number; size?: string; color?: string }>) => {
       const { id, size, color } = action.payload;
-
       const item = state.items.find(
         item => item.id === id && item.size === size && item.color === color
       );
@@ -53,7 +53,6 @@ const cartSlice = createSlice({
     },
     decrementQuantity: (state, action: PayloadAction<{ id: number; size?: string; color?: string }>) => {
       const { id, size, color } = action.payload;
-
       const item = state.items.find(
         item => item.id === id && item.size === size && item.color === color
       );
@@ -70,23 +69,38 @@ const cartSlice = createSlice({
         }
       }
     },
-    removeFromCart: (state, action: PayloadAction<{ id: number; size?: string; color?: string }>) => {
-      const { id, size, color } = action.payload;
-
-      const itemToRemove = state.items.find(
-        item => item.id === id && item.size === size && item.color === color
+    markAsRemoved: (state, action: PayloadAction<{ id: number; size?: string; color?: string }>) => {
+      const item = state.items.find(
+        item => item.id === action.payload.id && item.size === action.payload.size && item.color === action.payload.color
       );
-
-      if (itemToRemove) {
-        state.totalAmount -= itemToRemove.price * itemToRemove.quantity;
-        state.items = state.items.filter(
-          item => !(item.id === id && item.size === size && item.color === color)
-        );
+      if (item) {
+        item.status = 'removed';
       }
+    },
+    removeFromCart: (state, action: PayloadAction<{ id: number; size?: string; color?: string }>) => {
+      state.items = state.items.filter(
+        item => !(item.id === action.payload.id && item.size === action.payload.size && item.color === action.payload.color)
+      );
     },
     clearCart: state => {
       state.items = [];
       state.totalAmount = 0;
+      state.orderStatus = 'idle';
+    },
+    sendOrder: (state) => {
+      state.orderStatus = "loading";
+      state.items = state.items.map((item) => ({
+        ...item,
+        status: "on_the_way", 
+      }));
+    },
+    orderSuccess: state => {
+      state.orderStatus = 'success';
+      state.items = [];
+      state.totalAmount = 0;
+    },
+    orderError: state => {
+      state.orderStatus = 'error';
     },
   },
 });
@@ -97,6 +111,10 @@ export const {
   decrementQuantity,
   clearCart,
   removeFromCart,
+  markAsRemoved,
+  sendOrder,
+  orderSuccess,
+  orderError,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

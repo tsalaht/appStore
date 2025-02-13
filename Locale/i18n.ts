@@ -106,7 +106,15 @@ Sales:"Sales",
   "user_responsibilities_content": "Users must comply with all local laws and use the app lawfully.",
   "modifications_title": "Modifications",
   "modifications_content": "We reserve the right to modify these terms at any time without prior notice.",
-  no_orders:"No Orders"
+  no_orders:"No Orders",
+  my_orders:'My orders',
+   send_order:"Send order",
+   on_the_way:"On the way",
+     in_cart:"In Cart",
+        removed:"Removed",
+        status:'status',
+        cancel_order:'Cancel Order',
+        explore_products:'Explore Products'
     },
   },
   ar: {
@@ -213,7 +221,15 @@ Sales:"تخفيضات",
   "user_responsibilities_content": "يتعين على المستخدم الالتزام بجميع القوانين المحلية واستخدام التطبيق بشكل قانوني.",
   "modifications_title": "التعديلات",
   "modifications_content": "نحتفظ بالحق في تعديل هذه الشروط في أي وقت دون إشعار مسبق.",
-    no_orders:"لا يوجد طلبات"
+    no_orders:"لا يوجد طلبات",
+    my_orders:'طلبياتي',
+    send_order:"إرسال الطلب",
+       on_the_way:"في الطريق",
+       in_cart:"في السلة",
+       removed:"تمت ازالته",
+        status:'الحالة',
+           cancel_order:'الغاء الطلب',
+                 explore_products:'استكشف منتجاتنا'
     },
   },
 };

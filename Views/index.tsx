@@ -7,9 +7,9 @@ import {
 } from "@react-navigation/bottom-tabs";
 import { User,Home ,Discover,ShoppingCart} from "iconsax-react-native";
 import PageOne from "./Pages/PageOne";
-import PageTwo from "./Pages/PageTwo";
+
 import PageThree from "./Pages/PageThree";
-import PageFour from "./Pages/PageFour";
+
 import Header from "./Header";
 import styles from "./Styles";
 import { useSelector } from "react-redux";

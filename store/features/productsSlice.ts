@@ -8,7 +8,7 @@ export const fetchAllProducts = createAsyncThunk(
     'products/fetchAll',
     async (params?: { status?: string; category_id?: string; search?: string; user_id?: string }) => {
       try {
-        const response = await axios.get(`${BASE_URL}/all`, {  params: { user_id: '123' }, });
+        const response = await axios.get(`${BASE_URL}/all`, {  params: { user_id: '1' }, });
         console.log("API Response:", response.data); // Debug API response
         return response.data;
       } catch (error) {

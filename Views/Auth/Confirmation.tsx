@@ -9,6 +9,7 @@ import {
   VStack,
   WarningOutlineIcon,
   useToast,
+  Pressable
 } from "native-base";
 import { TextInput } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,6 +20,7 @@ import { StatusBar } from "expo-status-bar";
 import { useTranslation } from "react-i18next";
 import { setPassHome } from "../../store/PassHomeSlice";
 import { RootState } from "../../store/store";
+import { Mobile, Eye, EyeSlash,ArrowLeft } from "iconsax-react-native";
 
 const Confirmation = ({ navigation }: any) => {
   const dispatch = useDispatch();
@@ -78,6 +80,11 @@ const Confirmation = ({ navigation }: any) => {
       flex={1}
     >
       <StatusBar style="auto" />
+      <Stack w={"full"} mb={4} position={"fixed"}>
+              <Pressable onPress={() => navigation.goBack()}>
+                <ArrowLeft size="32" color="#FFD700" />
+              </Pressable>
+            </Stack>
       <Stack w="full" justifyContent="center" alignItems="center">
         <Text fontWeight={700} fontSize="16px" color={textColor}>
           {t("confirm_code")}
@@ -129,12 +136,12 @@ const Confirmation = ({ navigation }: any) => {
                 </Text>
               </HStack>
 
-              <VStack my="32px" space="20px" alignItems="center" bottom={0} left={-3} position="absolute" width="full">
+              <VStack my="32px" space="20px" alignItems="center" bottom={20} left={-3} position="absolute" width="full">
                 <Button
                   width="full"
                   backgroundColor={isPressed ? "#F9D77E" : "#FFD700"}
                   rounded="12px"
-                  mt="84px"
+                  mt="20px"
                   py="16px"
                   onPressIn={() => setIsPressed(true)}
                   onPressOut={() => setIsPressed(false)}
